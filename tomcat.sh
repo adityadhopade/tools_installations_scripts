@@ -35,3 +35,5 @@ comment:
 sudo stopTomcat
 sudo startTomcat
 
+#to copy the folder containing war to the webapps folder
+cp /opt/apache-tomcat-9.0.65/conf/petclinic/target/petclinic.war /opt/apache-tomcat-9.0.65/webapps/
