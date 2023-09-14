@@ -1,6 +1,17 @@
-# INSTALL SONARQUBE
+# INSTALL SONARQUBE via Docker 
   
     docker run -d --name sonarqube -p 9000:9000 -p 9092:9092 sonarqube
+
+# Most favorable via docker for AMAZON LINUX 3
+sudo dnf update
+sudo dnf install docker
+sudo systemctl start docker
+sudo systemctl enable docker
+sudo systemctl status docker
+#  Allow docker to run without sudo
+sudo usermod -aG docker $USER
+newgrp docker
+
 
 
 wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-9.0.zip
