@@ -34,7 +34,7 @@ sudo systemctl start jenkins
 
 -------------------------AMI AMAZON LINUX 3 -----------------------------------------
 
-sudo yum update –y
+sudo yum update
 sudo wget -O /etc/yum.repos.d/jenkins.repo \
     https://pkg.jenkins.io/redhat-stable/jenkins.repo
 sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
