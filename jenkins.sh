@@ -1,3 +1,5 @@
+PORT 9001
+
 #!/bin/bash
 
 sudo apt update -y
