@@ -5,3 +5,109 @@ echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.
 sudo apt-get update
 sudo apt-get install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
+---------------------------------------------------------------------------
+To execute on both the master and worker node
+
+# Disable swap
+sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
+sudo swapoff -a
+
+#To enavble kernel modules
+sudo modprobe overlay
+sudo modprobe br_netfilter
+
+#Add some setting to the sysctl
+sudo tee /etc/sysctl.d/kubernetes.conf<<EOF
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+net.ipv4.ip_forward = 1
+EOF
+
+#Reload sysctl
+sudo sysctl --system
+
+#Install Container Runtime [Docker]
+sudo apt update
+sudo apt install -y curl gnupg2 software-properties-common apt-transport-https ca-certificates
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+sudo apt update
+sudo apt install -y containerd.io docker-ce docker-ce-cli
+
+#create the required directories
+sudo mkdir -p /etc/systemd/system/docker.service.d
+
+#create daemon json configuration file
+sudo tee /etc/docker/daemon.json <<EOF
+{
+  "exec-opts": ["native.cgroupdriver=systemd"],
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "100m"
+  },
+  "storage-driver": "overlay2"
+}
+EOF
+
+
+#start and enable the services
+sudo systemctl daemon-reload 
+sudo systemctl restart docker
+sudo systemctl enable docker
+
+#ensure your load modules
+sudo modprobe overlay
+sudo modprobe br_netfilter
+
+#setup required sysctl params
+sudo tee /etc/sysctl.d/kubernetes.conf<<EOF
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+net.ipv4.ip_forward = 1
+EOF
+
+#reload sysctl
+sudo sysctl --system
+
+#nitialise the master node 
+#make sure that you are logged in into the server to be used as a master and make sure that the br_netfilter module is loaded:
+lsmod | grep br_netfilter
+
+#Enable kubelet service
+sudo systemctl enable kubelet
+
+# Initialise kubeadm
+kubeadm init
+
+#Configure kubectl using commands in the output
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+#Additional nodes can be found using the command installation outputs:
+kubeadm join k8s-cluster.computingforgeeks.com:6443 --token sr4l2l.2kvot0pfalh5o4ik \
+    --discovery-token-ca-cert-hash sha256:c692fb047e15883b575bd6710779dc2c5af8073f7cab460abd181fd3ddb29a18 \
+    --control-plane
+
+#Install network plugin on master
+#In this we’ll use Calico. You can choose any other supported network plugins.
+
+curl https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/calico.yaml -O
+kubectl apply -f calico.yaml
+
+kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml --> might not work 
+
+There may le a problem in above installation like 
+
+[init] Using Kubernetes version: v1.26.1
+[preflight] Running pre-flight checks
+error execution phase preflight: [preflight] Some fatal errors occurred:
+        [ERROR CRI]: container runtime is not running: output: time="2023-02-26T16:02:00Z" level=fatal msg="validate service connection: CRI v1 runtime API is not implemented for endpoint \"unix:///var/run/containerd/containerd.sock\": rpc error: code = Unimplemented desc = unknown service runtime.v1.RuntimeService"
+, error: exit status 1
+[preflight] If you know what you are doing, you can make a check non-fatal with `--ignore-preflight-errors=...`
+To see the stack trace of this error execute with --v=5 or higher
+
+solution is in the below link
+
+https://programmerall.com/article/99842435629/
+
