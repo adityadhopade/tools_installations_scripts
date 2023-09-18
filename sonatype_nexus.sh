@@ -1,5 +1,5 @@
 #TO install nexus we need to install java first
-
+sudo apt-get install openjdk-8-jre
 # to install nexus only
 
 wget https://download.sonatype.com/nexus/3/nexus-3.60.0-02-unix.tar.gz
