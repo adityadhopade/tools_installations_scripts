@@ -10,6 +10,7 @@ cd nexus-3.60.0-02/bin
 
 ## ACCESS USING THE PORT 8081  => IP ADDRESS:8081
 
+cat /home/ubuntu/sonatype-work/nexus3/admin.password
 
 # IF JAVA_HOME IS NOT SET TO JAVA 8 THEN DO THE FOLLOWING STEPS
 
