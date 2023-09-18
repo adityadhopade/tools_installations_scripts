@@ -9,3 +9,12 @@ cd nexus-3.60.0-02/bin
 ./nexus status
 
 ## ACCESS USING THE PORT 8081  => IP ADDRESS:8081
+
+
+# IF JAVA_HOME IS NOT SET TO JAVA 8 THEN DO THE FOLLOWING STEPS
+
+sudo alternatives --config java
+nano ~/.bashrc
+export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64" #[Append it to the bottom]
+source ~/.bashrc
+java -version
