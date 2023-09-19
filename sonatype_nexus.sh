@@ -1,4 +1,5 @@
 #TO install nexus we need to install java first
+sudo apt-get update
 sudo apt-get install openjdk-8-jdk
 # to install nexus only
 
