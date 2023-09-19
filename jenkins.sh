@@ -50,6 +50,7 @@ sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 
 
 ------------------------------------------ UBUNTU --------------------------------
+sudo apt update
 sudo apt install openjdk-11-jdk -y
 java --version
 curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo tee \
