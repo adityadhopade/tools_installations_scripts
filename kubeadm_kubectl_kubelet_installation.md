@@ -150,17 +150,17 @@ kubectl get pods -A
 ```
 
 ### References for the above setup
-https://kubernetes.io/docs/setup/production-environment/container-runtimes/#forwarding-ipv4-and-letting-iptables-see-bridged-traffic
-https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
-https://kubernetes.io/docs/setup/production-environment/container-runtimes/#containerd
-https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/
-https://www.mirantis.com/blog/how-install-kubernetes-kubeadm/
-https://www.mankier.com/1/kubeadm-init
-https://kubernetes.io/docs/setup/production-environment/container-runtimes/#docker
-https://github.com/containerd/containerd/blob/main/docs/getting-started.md
-https://kubernetes.io/docs/reference/networking/ports-and-protocols/
-https://www.weave.works/docs/net/latest/kubernetes/kube-addon/#install
-https://github.com/skooner-k8s/skooner
-https://www.weave.works/docs/net/latest/kubernetes/kube-addon/#eks
+- https://kubernetes.io/docs/setup/production-environment/container-runtimes/#forwarding-ipv4-and-letting-iptables-see-bridged-traffic
+- https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
+- https://kubernetes.io/docs/setup/production-environment/container-runtimes/#containerd
+- https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/
+- https://www.mirantis.com/blog/how-install-kubernetes-kubeadm/
+- https://www.mankier.com/1/kubeadm-init
+- https://kubernetes.io/docs/setup/production-environment/container-runtimes/#docker
+- https://github.com/containerd/containerd/blob/main/docs/getting-started.md
+- https://kubernetes.io/docs/reference/networking/ports-and-protocols/
+- https://www.weave.works/docs/net/latest/kubernetes/kube-addon/#install
+- https://github.com/skooner-k8s/skooner
+- https://www.weave.works/docs/net/latest/kubernetes/kube-addon/#eks
 https://github.com/kubernetes-sigs/cri-tools/blob/master/docs/crictl.md
 https://www.mankier.com/1/kubeadm-init
