@@ -16,3 +16,18 @@ sudo apt install docker-ce -y
 #sudo systemctl status docker
 
 sudo chmod 777 /var/run/docker.sock
+
+
+### Permissions Issue can be resolved via the following commands
+```
+# ERROR: Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock
+sudo groupadd docker
+
+sudo usermod -aG docker ${USER}
+
+sudo chmod 666 /var/run/docker.sock
+
+sudo systemctl restart docker
+
+sudo systemctl status docker
+```
